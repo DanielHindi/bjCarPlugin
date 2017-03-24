@@ -1,7 +1,7 @@
 {
-  "name": "peoplePlugin",
+  "name": "auctionPlugin",
   "version": "1.0.0",
-  "description": "BuildFire Plugin to allow App Owners to include Staff/People into their app and provide contact info",
+  "description": "BuildFire Plugin to allow App Owners to include Staff/Auction into their app and provide contact info",
   "main": "index.js",
   "scripts": {
     "postinstall": "./node_modules/.bin/bower install",

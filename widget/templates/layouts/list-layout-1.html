@@ -1,5 +1,5 @@
 <div class="holder padding-zero">
-  <div class="people-plugin listlayout1">
+  <div class="cars-plugin listlayout1">
     <div class="plugin-banner clearfix">
       <div id="carousel" build-fire-carousel=""
            ng-style="WidgetHome.data.content.images.length > 0 ? {'min-height': (9 * deviceWidth / 16) + 'px' } : {}"></div>
@@ -12,14 +12,13 @@
       <hr class="small" ng-if="WidgetHome.showDescription(WidgetHome.data.content.description)">
       <div>
         <div class="list-items" ng-if="WidgetHome.data" infinite-scroll-distance="1" data-infinite-container=".infinite-scroll-parent" infinite-scroll="WidgetHome.loadMore()" infinite-scroll-disabled="WidgetHome.noMore">
-          <div class="list-item clearfix" ng-repeat="item in WidgetHome.items">
-            <div ng-if="item.data.topImage" class="media pull-left border-radius-four people-thumbnail margin-right-ten" ng-click="WidgetHome.getPeopleDetails(item.id)">
-              <img class="people-thumbnail-img text-overlay" load-image="4x3" crop-width="100" crop-height="60" crop-type="crop" data-final-src="{{item.data.topImage}}">
-              <!--<img ng-if="!item.data.topImage" class="people-thumbnail-img text-overlay" src="../../../styles/media/holder-16x9.png">-->
+          <div class="list-item clearfix" ng-repeat="item in WidgetHome.auction.items">
+            <div class="media pull-left border-radius-four cars-thumbnail margin-right-ten" ng-click="WidgetHome.getAuctionDetails(item,$index)">
+              <img class="cars-thumbnail-img text-overlay" load-image="4x3" crop-width="100" crop-height="60" crop-type="crop" data-final-src="{{item.images[0].fullsize_url}}">
             </div>
-            <div class="content margin-top-ten padding-left-zero" ng-click="WidgetHome.getPeopleDetails(item.id)" style="min-height:50px;">
+            <div class="content margin-top-ten padding-left-zero" ng-click="WidgetHome.getAuctionDetails(item,$index)" style="min-height:50px;">
               <p class="text-primary ellipsis margin-zero text-overlay">
-				<a>{{item.data.fName}} {{item.data.lName}}</a>
+				<a>{{item.marketing_desc}}</a>
 			  </p>
               <p class="margin-bottom-zero ellipsis body-content-word-break text-overlay" ng-if="item.data.position">{{item.data.position}}</p>
               <p class="margin-bottom-zero ellipsis body-content-word-break text-overlay" ng-if="!item.data.bodyContent"></p>

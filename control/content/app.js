@@ -1,25 +1,25 @@
 'use strict';
 
 (function (angular, buildfire) {
-    //created peoplePluginContent module
+    //created auctionPluginContent module
     angular
-        .module('peoplePluginContent', [
-            'peopleEnums',
-            'peopleFiltersContent',
-            'peopleServices',
+        .module('auctionPluginContent', [
+            'auctionEnums',
+            'auctionFiltersContent',
+            'auctionServices',
             'ngAnimate',
             'ngRoute',
             'ui.bootstrap',
             'ui.sortable',
             'infinite-scroll',
-            "ui.tinymce",
-            "bngCsv"])
+            "ui.tinymce"
+            ])
         //injected ngRoute for routing
         //injected ui.bootstrap for angular bootstrap component
         //injected ui.sortable for manual ordering of list
         .constant('TAG_NAMES', {
-            PEOPLE_INFO: 'peopleInfo',
-            PEOPLE: 'people'
+            AUCTION_INFO: 'auctionInfo',
+            CARS: 'cars'
         })
         .constant('ERROR_CODE', {
             NOT_FOUND: 'NOTFOUND'
@@ -47,11 +47,12 @@
                     controllerAs: 'ContentHome',
                     controller: 'ContentHomeCtrl',
                     resolve: {
-                        PeopleInfo: ['$q', 'DB', 'COLLECTIONS', 'Location', function ($q, DB, COLLECTIONS, Location) {
+                        AuctionInfo: ['$q', 'DB', 'COLLECTIONS', 'Location', function ($q, DB, COLLECTIONS, Location) {
+
                             var deferred = $q.defer();
-                            var PeopleInfo = new DB(COLLECTIONS.peopleInfo);
+                            var auctionInfo = new DB(COLLECTIONS.auctionInfo);
                             /*    var _bootstrap = function () {
-                             PeopleInfo.save({
+                             auctionInfo.save({
                              content: {
                              images: [],
                              description: '',
@@ -69,7 +70,7 @@
                              _bootstrap();
                              })
                              };*/
-                            PeopleInfo.get().then(function success(result) {
+                            auctionInfo.get().then(function success(result) {
                                     if (result && result.data && result.data.content && result.data.design) {
                                         deferred.resolve(result);
                                     }
@@ -101,42 +102,20 @@
                         }]
                     }
                 })
-                .when('/people', {
-                    templateUrl: 'templates/people.html',
-                    controllerAs: 'ContentPeople',
-                    controller: 'ContentPeopleCtrl'
+                .when('/cars', {
+                    templateUrl: 'templates/cars.html',
+                    controllerAs: 'ContentAuction',
+                    controller: 'ContentAuctionCtrl'
                 })
-                .when('/people/:itemId', {
-                    templateUrl: 'templates/people.html',
-                    controllerAs: 'ContentPeople',
-                    controller: 'ContentPeopleCtrl'
+                .when('/cars/:itemId', {
+                    templateUrl: 'templates/cars.html',
+                    controllerAs: 'ContentAuction',
+                    controller: 'ContentAuctionCtrl'
                 })
                 .otherwise('/');
         }])
         .factory('Buildfire', [function () {
             return buildfire;
-        }])
-        .directive('fileReader', [function () {
-            return {
-                restrict: 'A',
-                link: function (scope, element, attrs) {
-                    element.context.onchange = function (event) {
-                        var files = event && event.target && event.target.files; //FileList object
-                        for (var i = 0; i < files.length; i++) {
-                            var file = files[i];
-                            var picReader = new FileReader();
-                            picReader.addEventListener("load", function (event) {
-                                var textFile = event.target;
-                                scope.ImportCSVPopup[attrs.fileReader] = textFile.result;
-                            });
-                            //Read the text file
-                            picReader.readAsText(file);
-                        }
-
-                    }
-
-                }
-            };
         }])
         .factory('Location', [function () {
             var _location = window.location;
@@ -180,7 +159,7 @@
                 console.log(msg.type, window.location.href, msg.id);
                 switch (msg.type) {
                     case 'OpenItem':
-                        Location.goTo("#/people/" + msg.id);
+                        Location.goTo("#/cars/" + msg.id);
                         break;
                     default:
                         Buildfire.history.pop();

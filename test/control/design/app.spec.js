@@ -1,6 +1,6 @@
-describe('Unit: peoplePluginDesign app', function () {
+describe('Unit: auctionPluginDesign app', function () {
   describe('Unit: app routes', function () {
-    beforeEach(module('peoplePluginDesign'));
+    beforeEach(module('auctionPluginDesign'));
     var location, route, rootScope;
     beforeEach(inject(function (_$location_, _$route_, _$rootScope_) {
       location = _$location_;
@@ -26,8 +26,8 @@ describe('Unit: peoplePluginDesign app', function () {
   });
 });
 
-describe('Unit: peoplePluginDesign filter', function () {
-  beforeEach(module('peoplePluginDesign'));
+describe('Unit: auctionPluginDesign filter', function () {
+  beforeEach(module('auctionPluginDesign'));
   var filter;
   beforeEach(inject(function (_$filter_) {
     filter = _$filter_;

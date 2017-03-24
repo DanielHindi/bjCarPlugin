@@ -2,9 +2,9 @@
 
 (function (angular, window) {
     angular
-        .module('peoplePluginWidget')
-        .controller('WidgetHomeCtrl', ['$scope', 'Buildfire', 'TAG_NAMES', 'COLLECTIONS', 'ERROR_CODE', "Location", '$sce', '$rootScope', 'DB',
-            function ($scope, Buildfire, TAG_NAMES, COLLECTIONS, ERROR_CODE, Location, $sce, $rootScope, DB) {
+        .module('auctionPluginWidget')
+        .controller('WidgetHomeCtrl', ['$scope','$http', 'Buildfire', 'TAG_NAMES', 'COLLECTIONS', 'ERROR_CODE', "Location", '$sce', '$rootScope', 'DB','$interval',
+            function ($scope, $http,Buildfire, TAG_NAMES, COLLECTIONS, ERROR_CODE, Location, $sce, $rootScope, DB,$interval) {
                 var MANUALLY = 'Manually',
                     OLDEST_TO_NEWEST = 'Oldest to Newest',
                     NEWEST_TO_OLDEST = 'Newest to Oldest',
@@ -21,7 +21,7 @@
                     },
                     DEFAULT_LIST_LAYOUT = 'list-layout-1',
                     DEFAULT_ITEM_LAYOUT = 'item-layout-1';
-                var PeopleInfo = new DB(TAG_NAMES.PEOPLE_INFO);
+                var AuctionInfo = new DB(TAG_NAMES.AUCTION_INFO);
                 var WidgetHome = this;
                 WidgetHome.data = {};
                 WidgetHome.busy = false;
@@ -96,9 +96,9 @@
                     }
                 };
 
-                /* Get People details*/
-                WidgetHome.getPeopleDetails = function (peopleId) {
-                    Location.goTo("#/people/" + peopleId);
+                /* Get Auction details*/
+                WidgetHome.getAuctionDetails = function (item, index) {
+                    Location.goTo("#/cars/" + index);
                 };
                 /*crop image on the basis of width heights*/
                 WidgetHome.cropImage = function (url, settings) {
@@ -128,8 +128,36 @@
                                 currentItemLayout = WidgetHome.data.design.itemLayout;
                                 currentListLayout = WidgetHome.data.design.listLayout;
                             }
-                            if (WidgetHome.data.content) {
-                                currentSortOrder = WidgetHome.data.content.sortBy;
+
+                            if (WidgetHome.data.content.auctionId) {
+                                var url = 'http://www.barrett-jackson.com/api/feeds/GetDocketFeed/' + WidgetHome.data.content.auctionId;
+                                var cache = localStorage.getItem('auctionData');
+                                var lastUpdate= localStorage.getItem('auctionLastUpdated');
+                                if(cache)
+                                    window.auction= WidgetHome.auction = JSON.parse(cache);
+
+                                if(lastUpdate) lastUpdate=new Date(parseInt(lastUpdate));
+
+                                if(!lastUpdate || lastUpdate.getDate() != new Date().getDate()) {
+                                    $http.get('https://proxy.buildfire.com/hop?url=' + encodeURIComponent(url)).then(function (response) {
+                                        window.auction = response.data; // keep global cache
+                                        WidgetHome.auction = response.data;
+                                        WidgetHome.auction.items = WidgetHome.auction.items.slice(0, 20);
+                                        localStorage.setItem('auctionData', JSON.stringify(WidgetHome.auction));
+                                        localStorage.setItem('auctionLastUpdated', Date.now().toString());
+                                    });
+                                }
+                                /*
+                                $interval(function(){
+                                    for (var i = 0; i < $scope.WidgetHome.auction.items.length ; i++){
+                                        var item= $scope.WidgetHome.auction.items[i];
+                                        if(!item._currentImageIndex || item._currentImageIndex < item.images.length)
+                                            item._currentImageIndex++;
+                                        item.image
+                                    }
+                                },1500);
+                                */
+
                             }
                             $rootScope.backgroundImage = WidgetHome.data.design.backgroundImage ? WidgetHome.data.design.backgroundImage : "";
                         }
@@ -138,7 +166,7 @@
                                 console.error('Error while getting data', err);
                             }
                         };
-                    PeopleInfo.get(TAG_NAMES.PEOPLE_INFO).then(success, error);
+                    AuctionInfo.get(TAG_NAMES.AUCTION_INFO).then(success, error);
                 };
 
                 init();
@@ -187,7 +215,7 @@
                             currentListLayout = WidgetHome.data.design.listLayout;
                         }
                         switch (event.tag) {
-                            case TAG_NAMES.PEOPLE:
+                            case TAG_NAMES.AUCTION:
                                 var skip = searchOptions.skip || 0;
                                 WidgetHome.busy = false;
                                 WidgetHome.items = [];
@@ -203,13 +231,13 @@
                                 }
 
                                 break;
-                            case TAG_NAMES.PEOPLE_INFO:
+                            case TAG_NAMES.AUCTION_INFO:
                                 if (event.data) {
                                     if (event.data.design && event.data.design.itemLayout && currentItemLayout != event.data.design.itemLayout) {
                                         if (WidgetHome.items && WidgetHome.items.length) {
                                             var id = WidgetHome.items[0].id;
                                             $rootScope.showHome = true;
-                                            Location.goTo("#/people/" + id);
+                                            Location.goTo("#/cars/" + id);
                                         }
                                     }
                                     else if (event.data.design && event.data.design.listLayout && currentListLayout != event.data.design.listLayout) {
@@ -269,7 +297,7 @@
                     if (WidgetHome.data && WidgetHome.data.content && WidgetHome.data.content.sortBy) {
                         searchOptions = getSearchOptions(WidgetHome.data.content.sortBy);
                     }
-                    Buildfire.datastore.search(searchOptions, TAG_NAMES.PEOPLE, function (err, result) {
+                    Buildfire.datastore.search(searchOptions, TAG_NAMES.AUCTION, function (err, result) {
                         console.log('-----------WidgetHome.loadMore-------------');
                         if (err) {
                             Buildfire.spinner.hide();
@@ -360,7 +388,7 @@
                               }
                           };
 
-                        PeopleInfo.get(TAG_NAMES.PEOPLE_INFO).then(success, error);
+                        AuctionInfo.get(TAG_NAMES.AUCTION_INFO).then(success, error);
                         WidgetHome.items = [];
                         searchOptions.skip = 0;
                         WidgetHome.busy = false;
@@ -413,7 +441,7 @@
                           }
                       };
 
-                    PeopleInfo.get(TAG_NAMES.PEOPLE_INFO).then(success, error);
+                    AuctionInfo.get(TAG_NAMES.AUCTION_INFO).then(success, error);
                     WidgetHome.items = [];
                     searchOptions.skip = 0;
                     WidgetHome.busy = false;

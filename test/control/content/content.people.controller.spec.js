@@ -1,6 +1,6 @@
-describe('Unit : people Plugin content.people.controller.js', function () {
-    var ContentPeople, $scope, $rootScope, $controller, $routeParams, TAG_NAMES, Buildfire, STATUS_CODE, RankOfLastItem, $modal, Location;
-    beforeEach(module('peoplePluginContent'));
+describe('Unit : cars Plugin content.cars.controller.js', function () {
+    var ContentAuction, $scope, $rootScope, $controller, $routeParams, TAG_NAMES, Buildfire, STATUS_CODE, RankOfLastItem, $modal, Location;
+    beforeEach(module('auctionPluginContent'));
     var editor;
     beforeEach(inject(function (_$rootScope_, _$controller_, _$routeParams_, _Buildfire_, _TAG_NAMES_, _STATUS_CODE_, _Location_, _RankOfLastItem_) {
         $rootScope = _$rootScope_;
@@ -41,7 +41,7 @@ describe('Unit : people Plugin content.people.controller.js', function () {
     }));
 
     beforeEach(function () {
-        ContentPeople = $controller('ContentPeopleCtrl', {
+        ContentAuction = $controller('ContentAuctionCtrl', {
             $scope: $scope,
             $routeParams: $routeParams,
             Buildfire: Buildfire,

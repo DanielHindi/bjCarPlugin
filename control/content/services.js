@@ -1,9 +1,10 @@
 'use strict';
 
-(function (angular, buildfire, location) {
+(function (angular, buildfire) {
     //created mediaCenterWidget module
+
     angular
-        .module('peopleServices', ['peopleEnums'])
+        .module('auctionServices', ['auctionEnums'])
         .provider('Buildfire', [function () {
             this.$get = function () {
                 return buildfire;
@@ -161,4 +162,4 @@
         .factory('Utility', [function () {
 
         }])
-})(window.angular, window.buildfire, window.location);
+})(window.angular, window.buildfire);

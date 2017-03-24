@@ -1,6 +1,6 @@
-describe('Unit: peoplePluginWidget widget app', function () {
+describe('Unit: auctionPluginWidget widget app', function () {
   describe('Unit: app routes', function () {
-    beforeEach(module('peoplePluginWidget'));
+    beforeEach(module('auctionPluginWidget'));
     var location, route, rootScope;
     beforeEach(inject(function (_$location_, _$route_, _$rootScope_) {
       location = _$location_;

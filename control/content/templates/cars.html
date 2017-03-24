@@ -7,16 +7,16 @@
       <div class="screens clearfix">
         <div class="screen carouselicon pull-left text-center">
           <a class="border-grey border-radius-three default-background-hover text-center"
-             ng-click="ContentPeople.selectTopImage()">
+             ng-click="ContentAuction.selectTopImage()">
             <span class="add-icon"
-                  ng-hide="ContentPeople.item.data.topImage">+</span>
-            <img ng-show="ContentPeople.item.data.topImage"
-                 ng-src="{{ContentPeople.item.data.topImage | getImageUrl : 110:85}}">
+                  ng-hide="ContentAuction.item.data.topImage">+</span>
+            <img ng-show="ContentAuction.item.data.topImage"
+                 ng-src="{{ContentAuction.item.data.topImage | getImageUrl : 110:85}}">
           </a>
           <span
               class="icon btn-icon btn-delete-icon btn-danger btn-close transition-third"
-              ng-show="ContentPeople.item.data.topImage"
-              ng-click="ContentPeople.removeTopImage()"></span>
+              ng-show="ContentAuction.item.data.topImage"
+              ng-click="ContentAuction.removeTopImage()"></span>
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
     </div>
     <div class="main col-md-9 pull-right">
       <input type="text" class="form-control"
-             ng-model="ContentPeople.item.data.fName" placeholder="">
+             ng-model="ContentAuction.item.data.fName" placeholder="">
     </div>
   </div>
   <hr class="none">
@@ -38,7 +38,7 @@
     </div>
     <div class="main col-md-9 pull-right">
       <input type="text" class="form-control"
-             ng-model="ContentPeople.item.data.lName" placeholder="">
+             ng-model="ContentAuction.item.data.lName" placeholder="">
     </div>
   </div>
   <hr class="none">
@@ -48,7 +48,7 @@
     </div>
     <div class="main col-md-9 pull-right">
       <input type="text" class="form-control"
-             ng-model="ContentPeople.item.data.position" placeholder="">
+             ng-model="ContentAuction.item.data.position" placeholder="">
     </div>
   </div>
   <hr class="none">
@@ -57,7 +57,7 @@
       <span>Deep Link URL</span>
     </div>
     <div class="main col-md-9 pull-right">
-      <span>{{ContentPeople.item.data.deepLinkUrl}}</span>
+      <span>{{ContentAuction.item.data.deepLinkUrl}}</span>
     </div>
   </div>
   <hr class="none">
@@ -70,8 +70,8 @@
   <div class="item clearfix row">
     <div class="main col-md-12 pull-right">
       <textarea class="form-control"
-                ui-tinymce="ContentPeople.bodyContentWYSIWYGOptions"
-                ng-model="ContentPeople.item.data.bodyContent"
+                ui-tinymce="ContentAuction.bodyContentWYSIWYGOptions"
+                ng-model="ContentAuction.item.data.bodyContent"
                 placeholder="WYSIWYG"></textarea>
     </div>
   </div>
@@ -83,7 +83,7 @@
     <div class="main col-md-9 pull-right">
       <div class="col-md-6 row">
         <a class="btn btn-success pull-left stretch"
-           ng-click="ContentPeople.openAddLinkPopup()">Add Contact Information</a>
+           ng-click="ContentAuction.openAddLinkPopup()">Add Contact Information</a>
       </div>
     </div>
   </div>
@@ -91,10 +91,10 @@
   <div class="item clearfix row">
     <div class="main col-md-12 pull-right">
       <div class="draggable-list-view wide-list has-btn links-list"
-           ui-sortable="ContentPeople.linksSortableOptions"
-           ng-model="ContentPeople.item.data.socialLinks">
+           ui-sortable="ContentAuction.linksSortableOptions"
+           ng-model="ContentAuction.item.data.socialLinks">
         <div class="d-item double-line square-icon clearfix"
-             ng-repeat="_link in ContentPeople.item.data.socialLinks">
+             ng-repeat="_link in ContentAuction.item.data.socialLinks">
           <span class="icon icon-menu cursor-grab pull-left"></span>
 
           <div class="media-holder pull-left">
@@ -103,7 +103,7 @@
           <div class="copy pull-right">
             <div class="col-md-4 padding-zero pull-left">
               <a class="text-primary"
-                 ng-click="ContentPeople.openEditLink(_link,$index)"><span
+                 ng-click="ContentAuction.openEditLink(_link,$index)"><span
                   class="title ellipsis pull-left">{{_link.title}}</span></a>
               <span class="title ellipsis pull-left">{{_link.url}}</span>
             </div>
@@ -112,14 +112,14 @@
             </div>
             <div class="pull-right">
               <span class="btn-icon btn-delete-icon btn-danger transition-third"
-                    ng-click="ContentPeople.removeLink($index)"></span>
+                    ng-click="ContentAuction.removeLink($index)"></span>
             </div>
           </div>
         </div>
 
         <!-- Show If No Items -->
         <div class="well text-center margin-bottom-zero border-none"
-             ng-hide="ContentPeople.item.data.socialLinks.length">
+             ng-hide="ContentAuction.item.data.socialLinks.length">
           <p class="margin-zero">No items found.</p>
         </div>
       </div>
@@ -130,7 +130,7 @@
     <div class="main col-md-9 pull-right">
       <div class="col-md-6 pull-right padding-right-zero padding-left-ten">
         <a class="btn btn-primary pull-right stretch"
-           ng-click="ContentPeople.done()" href="javaScript:void(0);">Done</a>
+           ng-click="ContentAuction.done()" href="javaScript:void(0);">Done</a>
       </div>
     </div>
   </div>

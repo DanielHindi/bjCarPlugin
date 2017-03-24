@@ -2,11 +2,11 @@
 
 (function (angular, buildfire) {
   angular
-    .module('peoplePluginContent')
-    .controller('ContentHomeCtrl', ['$scope', '$modal', 'Buildfire', '$csv', 'SORT', 'TAG_NAMES', 'ERROR_CODE', 'RankOfLastItem', '$timeout', 'Location', '$sce', 'PeopleInfo', '$rootScope',
-      function ($scope, $modal, Buildfire, FormatConverter, SORT, TAG_NAMES, ERROR_CODE, RankOfLastItem, $timeout, Location, $sce, PeopleInfo, $rootScope) {
+    .module('auctionPluginContent')
+    .controller('ContentHomeCtrl', ['$scope', '$modal', 'Buildfire',  'SORT', 'TAG_NAMES', 'ERROR_CODE', 'RankOfLastItem', '$timeout', 'Location', '$sce','AuctionInfo',
+      function ($scope, $modal, Buildfire,  SORT, TAG_NAMES, ERROR_CODE, RankOfLastItem, $timeout, Location, $sce,AuctionInfo) {
         /**
-         * List of options available for sorting people list.
+         * List of options available for sorting cars list.
          * */
         var header = {
           topImage: "Image URL",
@@ -17,7 +17,7 @@
         };
 
           /**
-           * SearchOptions are using for searching , sorting people and fetching people list
+           * SearchOptions are using for searching , sorting cars and fetching cars list
            * @type object
            */
 
@@ -28,12 +28,6 @@
           return item.fName || item.lName;
         }
 
-        function validateCsv(items) {
-          if (!Array.isArray(items) || !items.length) {
-            return false;
-          }
-          return items.every(isValidItem);
-        }
 
         var initialLoad = false;
         var ContentHome = this;
@@ -51,13 +45,13 @@
 
 
         /**
-         * ContentHome.items used to store the people list which fetched from server.
+         * ContentHome.items used to store the cars list which fetched from server.
          * @type {null}
          */
         ContentHome.items = null;
 
         /**
-         * ContentHome.data used to store PeopleInfo which fetched from server.
+         * ContentHome.data used to store AuctionInfo which fetched from server.
          * @type {null}
          */
         ContentHome.data = null;
@@ -131,7 +125,12 @@
           plugin_preview_width : "500",
           plugin_preview_height : "500"
         };
-        ContentHome.data = PeopleInfo.data;
+
+
+
+        ContentHome.data = AuctionInfo.data;
+
+
         if (!ContentHome.data.content.images)
           editor.loadItems([]);
         else
@@ -155,7 +154,7 @@
           for( var index = 0; index < items.length; index++ ) {
             var item = items[index];
             item.data.rank = index + 1;
-            Buildfire.datastore.update(item.id, item.data, TAG_NAMES.PEOPLE, function (err) {
+            Buildfire.datastore.update(item.id, item.data, TAG_NAMES.AUCTION, function (err) {
               if (err) {
                 console.error('Error during fixing ranks');
               } else {
@@ -169,7 +168,7 @@
         };
 
         /**
-         * ContentHome.itemSortableOptions used for ui-sortable directory to sort people listing Manually.
+         * ContentHome.itemSortableOptions used for ui-sortable directory to sort cars listing Manually.
          * @type object
          */
         ContentHome.itemSortableOptions = {
@@ -204,7 +203,7 @@
                 }
               }
               if (isRankChanged) {
-                Buildfire.datastore.update(draggedItem.id, draggedItem.data, TAG_NAMES.PEOPLE, function (err) {
+                Buildfire.datastore.update(draggedItem.id, draggedItem.data, TAG_NAMES.AUCTION, function (err) {
                   if (err) {
                     console.error('Error during updating rank');
                   } else {
@@ -223,10 +222,10 @@
         ContentHome.DeepLinkCopyUrl = false;
 
         /**
-         * tmrDelayForPeopleInfo is used to update peopleInfo after given time in setTimeOut.
+         * tmrDelayForAuctionInfo is used to update auctionInfo after given time in setTimeOut.
          * @type {null}
          */
-        var tmrDelayForPeopleInfo = null;
+        var tmrDelayForAuctionInfo = null;
 
         // Send message to widget to return to list layout
         buildfire.messaging.sendMessageToWidget({type: 'Init'});
@@ -298,7 +297,7 @@
           if (ContentHome.data && ContentHome.data.content.sortBy && !search) {
               ContentHome.searchOptions = getSearchOptions(ContentHome.data.content.sortBy);
           }
-          Buildfire.datastore.search(ContentHome.searchOptions, TAG_NAMES.PEOPLE, function (err, result) {
+          Buildfire.datastore.search(ContentHome.searchOptions, TAG_NAMES.AUCTION, function (err, result) {
             if (err) {
               Buildfire.spinner.hide();
               return console.error('-----------err in getting list-------------', err);
@@ -318,7 +317,7 @@
           });
         };
         /**
-         * Used to show/hide alert message when item's deep-link copied from people list.
+         * Used to show/hide alert message when item's deep-link copied from cars list.
          */
         ContentHome.openDeepLinkDialog = function (item) {
           ContentHome.DeepLinkCopyUrl = true;
@@ -333,107 +332,15 @@
         };
 
           ContentHome.updateItemData = function (item) {
-              Buildfire.datastore.update(item.id, item.data, TAG_NAMES.PEOPLE, function (err, result) {
+              Buildfire.datastore.update(item.id, item.data, TAG_NAMES.AUCTION, function (err, result) {
                   if (err)
                       return console.error('There was a problem saving your data');
               });
           };
 
-        /**
-         * method to open the importCSV Dialog
-         */
-        ContentHome.openImportCSVDialog = function () {
 
-          buildfire.navigation.scrollTop();
 
-          var modalInstance = $modal
-            .open({
-              templateUrl: 'templates/modals/import-csv.html',
-              controller: 'ImportCSVPopupCtrl',
-              controllerAs: 'ImportCSVPopup',
-              size: 'sm'
-            });
-          modalInstance.result.then(function (rows) {
-            Buildfire.spinner.show();
-            if (rows && rows.length) {
-              var rank = ContentHome.data.content.rankOfLastItem || 0;
-              for (var index = 0; index < rows.length; index++) {
-                rank += 10;
-                rows[index].dateCreated = +new Date();
-                rows[index].socialLinks = [];
-                rows[index].rank = rank;
-              }
-              if (validateCsv(rows)) {
-                Buildfire.datastore.bulkInsert(rows, TAG_NAMES.PEOPLE, function (err, data) {
-                  Buildfire.spinner.hide();
-                  $scope.$apply();
-                  if (err) {
-                    console.error('There was a problem while importing the file----', err);
-                  }
-                  else {
-                    console.info('File has been imported----------------------------');
-                    ContentHome.busy = false;
-                    ContentHome.noMore = false;
-                    ContentHome.items = null;
-                    ContentHome.searchOptions.skip = 0;
-                    ContentHome.loadMore();
-                    ContentHome.data.content.rankOfLastItem = rank;
-                  }
-                });
-              } else {
-                Buildfire.spinner.hide();
-                //$scope.$apply();
-                ContentHome.csvDataInvalid = true;
-                $timeout(function hideCsvDataError() {
-                  ContentHome.csvDataInvalid = false;
-                }, 2000)
-              }
-            }
-            else {
-              Buildfire.spinner.hide();
-              $scope.$apply();
-            }
-          }, function (error) {
-            Buildfire.spinner.hide();
-           // $scope.$apply();
-            //do something on cancel
-          });
-        };
 
-        /**
-         * ContentHome.exportCSV() used to export people list data to CSV
-         */
-        ContentHome.exportCSV = function () {
-          getRecords({
-              filter: {"$json.fName": {"$regex": '/*'}},
-              skip: 0,
-              limit: SORT._maxLimit + 1 // the plus one is to check if there are any more
-            },
-            []
-            , function (err, data) {
-              if (err) {
-                return console.error('Err while exporting data--------------------------------', err);
-              }
-              if (data && data.length) {
-                var persons = [];
-                angular.forEach(angular.copy(data), function (value) {
-                  delete value.data.dateCreated;
-                  delete value.data.iconImage;
-                  delete value.data.socialLinks;
-                  delete value.data.rank;
-                  persons.push(value.data);
-                });
-                var csv = FormatConverter.jsonToCsv(angular.toJson(persons), {
-                  header: header
-                });
-                FormatConverter.download(csv, "Export.csv");
-              }
-              else {
-                ContentHome.getTemplate();
-              }
-              records = [];
-            });
-        };
         /**
          * records holds the data to export the data.
          * @type {Array}
@@ -448,7 +355,7 @@
          */
         function getRecords(searchOption, records, callback) {
           console.log("Data length", records.length);
-          Buildfire.datastore.search(searchOption, TAG_NAMES.PEOPLE, function (err, result) {
+          Buildfire.datastore.search(searchOption, TAG_NAMES.AUCTION, function (err, result) {
             if (err) {
               console.error('-----------err in getting list-------------', err);
               return callback(err, []);
@@ -466,25 +373,9 @@
           });
         }
 
-        /**
-         * ContentHome.getTemplate() used to download csv template
-         */
-        ContentHome.getTemplate = function () {
-          var templateData = [{
-            topImage: "",
-            fName: "",
-            lName: "",
-            position: "",
-            bodyContent: ""
-          }];
-          var csv = FormatConverter.jsonToCsv(angular.toJson(templateData), {
-            header: header
-          });
-          FormatConverter.download(csv, "Template.csv");
-        };
 
         /**
-         * ContentHome.removeListItem() used to delete an item from people list
+         * ContentHome.removeListItem() used to delete an item from cars list
          * @param _index tells the index of item to be deleted.
          */
         ContentHome.removeListItem = function (_index) {
@@ -492,12 +383,12 @@
           buildfire.navigation.scrollTop();
 
           var modalInstance = $modal.open({
-            templateUrl: 'templates/modals/remove-people.html',
-            controller: 'RemovePeoplePopupCtrl',
-            controllerAs: 'RemovePeoplePopup',
+            templateUrl: 'templates/modals/remove-cars.html',
+            controller: 'RemoveAuctionPopupCtrl',
+            controllerAs: 'RemoveAuctionPopup',
             size: 'sm',
             resolve: {
-              peopleInfo: function () {
+              auctionInfo: function () {
                 return ContentHome.items[_index];
               }
             }
@@ -505,7 +396,7 @@
           modalInstance.result.then(function (message) {
             if (message === 'yes') {
               var item = ContentHome.items[_index];
-              Buildfire.datastore.delete(item.id, TAG_NAMES.PEOPLE, function (err, result) {
+              Buildfire.datastore.delete(item.id, TAG_NAMES.AUCTION, function (err, result) {
                 if (err)
                   return;
                 ContentHome.items.splice(_index, 1);
@@ -518,7 +409,7 @@
         };
 
         /**
-         * ContentHome.searchListItem() used to search people list
+         * ContentHome.searchListItem() used to search cars list
          * @param value to be search.
          */
         ContentHome.searchListItem = function (value) {
@@ -556,10 +447,10 @@
         };
 
         /**
-         * ContentHome.sortPeopleBy(value) used to sort people list
+         * ContentHome.sortAuctionBy(value) used to sort cars list
          * @param value is a sorting option
          */
-        ContentHome.sortPeopleBy = function (value) {
+        ContentHome.sortAuctionBy = function (value) {
           if (!value) {
             console.info('There was a problem sorting your data');
           } else {
@@ -572,17 +463,17 @@
         };
 
         /**
-         * saveDataWithDelay(infoData) called when PEOPLE_INFO data get changed
+         * saveDataWithDelay(infoData) called when AUCTION_INFO data get changed
          * @param infoData is the modified object returned by $scope.$watch.
          */
         var saveDataWithDelay = function (infoData) {
           if (infoData) {
-            if (tmrDelayForPeopleInfo) {
-              clearTimeout(tmrDelayForPeopleInfo);
+            if (tmrDelayForAuctionInfo) {
+              clearTimeout(tmrDelayForAuctionInfo);
             }
-            tmrDelayForPeopleInfo = setTimeout(function () {
+            tmrDelayForAuctionInfo = setTimeout(function () {
               if (initialLoad) {
-                saveData(JSON.parse(angular.toJson(infoData)), TAG_NAMES.PEOPLE_INFO);
+                saveData(JSON.parse(angular.toJson(infoData)), TAG_NAMES.AUCTION_INFO);
               }
               initialLoad = true;
             }, 500);

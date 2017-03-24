@@ -3,7 +3,7 @@
 (function (angular, buildfire, location) {
   //created mediaCenterWidget module
   angular
-    .module('peopleFiltersContent', [])
+    .module('auctionFiltersContent', [])
     .filter('resizeImage', [function () {
       return function (url, width, height, type) {
         return buildfire.imageLib.resizeImage(url, {

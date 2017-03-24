@@ -1,4 +1,4 @@
-describe('Unit : peoplePluginContent content Enums', function () {
+describe('Unit : auctionPluginContent content Enums', function () {
   var CODES, MESSAGES, EVENTS, COLLECTIONS, PATHS;
   var messages = {
     NOT_FOUND: "No result found",
@@ -8,7 +8,7 @@ describe('Unit : peoplePluginContent content Enums', function () {
     OPTION_REQUIRES: "Requires options"
   };
 
-  beforeEach(module('peoplePluginContent'));
+  beforeEach(module('auctionPluginContent'));
 
   beforeEach(inject(function (_CODES_, _MESSAGES_, _EVENTS_, _COLLECTIONS_, _PATHS_) {
     CODES = _CODES_;

@@ -1,6 +1,6 @@
-describe('Unit : peoplePluginDesign design.home.controller.js', function () {
+describe('Unit : auctionPluginDesign design.home.controller.js', function () {
     var $scope, DesignHome, $rootScope, q, $controller, buildfire, TAG_NAMES;
-    beforeEach(module('peoplePluginDesign'));
+    beforeEach(module('auctionPluginDesign'));
 
     beforeEach(inject(function (_$rootScope_, _$q_, _$controller_, _Buildfire_, _TAG_NAMES_) {
         $rootScope = _$rootScope_;
@@ -59,7 +59,7 @@ describe('Unit : peoplePluginDesign design.home.controller.js', function () {
         expect(DesignHome).toBeDefined();
     });
     it('should change the value of list layout when called for list', function () {
-        DesignHome.peopleInfo={design: {
+        DesignHome.auctionInfo={design: {
             listLayout: "",
             itemLayout: "",
             backgroundImage: ""
@@ -70,10 +70,10 @@ describe('Unit : peoplePluginDesign design.home.controller.js', function () {
             }};
         DesignHome.changeListLayout('list-layout-1');
         $rootScope.$apply();
-        expect(DesignHome.peopleInfo.design.listLayout).toEqual('list-layout-1');
+        expect(DesignHome.auctionInfo.design.listLayout).toEqual('list-layout-1');
     });
     it('should change the value of item layout when called for item', function () {
-        DesignHome.peopleInfo={design: {
+        DesignHome.auctionInfo={design: {
             listLayout: "",
             itemLayout: "",
             backgroundImage: ""
@@ -84,6 +84,6 @@ describe('Unit : peoplePluginDesign design.home.controller.js', function () {
             }};
         DesignHome.changeItemLayout('item-layout-1');
         $rootScope.$apply();
-        expect(DesignHome.peopleInfo.design.itemLayout).toEqual('item-layout-1');
+        expect(DesignHome.auctionInfo.design.itemLayout).toEqual('item-layout-1');
     });
 });

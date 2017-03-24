@@ -1,6 +1,6 @@
 (function (angular) {
     angular
-        .module('peopleEnums', [])
+        .module('auctionEnums', [])
         .constant('CODES', {
             NOT_FOUND: 'NOTFOUND',
             SUCCESS: 'SUCCESS'
@@ -18,8 +18,8 @@
             ROUTE_CHANGE: "ROUTE_CHANGE"
         })
         .constant('COLLECTIONS', {
-            peopleInfo: "peopleInfo",
-            people: "people"
+            auctionInfo: "auctionInfo",
+            cars: "cars"
         })
         .constant('PATHS', {
             MEDIA: "MEDIA",

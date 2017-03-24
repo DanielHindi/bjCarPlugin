@@ -1,6 +1,6 @@
-describe('Unit: peoplePluginContent content app', function () {
+describe('Unit: auctionPluginContent content app', function () {
     describe('Unit: app routes', function () {
-        beforeEach(module('peoplePluginContent'));
+        beforeEach(module('auctionPluginContent'));
         var location, route, rootScope;
         beforeEach(inject(function (_$location_, _$route_, _$rootScope_) {
             location = _$location_;
@@ -19,22 +19,22 @@ describe('Unit: peoplePluginContent content app', function () {
                 }));
         });
 
-        describe('Create people route', function () {
+        describe('Create cars route', function () {
             beforeEach(inject(
                 function ($httpBackend) {
-                    $httpBackend.expectGET('templates/people.html')
+                    $httpBackend.expectGET('templates/cars.html')
                         .respond(200);
-                    $httpBackend.expectGET('/people')
+                    $httpBackend.expectGET('/cars')
                         .respond(200);
                 }));
         });
 
-        describe('Edit people route', function () {
+        describe('Edit cars route', function () {
             beforeEach(inject(
                 function ($httpBackend) {
-                    $httpBackend.expectGET('templates/people.html')
+                    $httpBackend.expectGET('templates/cars.html')
                         .respond(200);
-                    $httpBackend.expectGET('/people/:id')
+                    $httpBackend.expectGET('/cars/:id')
                         .respond(200);
                 }));
         });
@@ -42,7 +42,7 @@ describe('Unit: peoplePluginContent content app', function () {
 
 
     describe('Unit: getImageUrl filter', function () {
-        beforeEach(module('peoplePluginContent'));
+        beforeEach(module('auctionPluginContent'));
         var filter;
         beforeEach(inject(function (_$filter_) {
             filter = _$filter_;
@@ -69,7 +69,7 @@ describe('Unit: peoplePluginContent content app', function () {
 
 
         beforeEach(function () {
-            module('peoplePluginContent');
+            module('auctionPluginContent');
 
             inject(function ($injector) {
                 $rootScope = $injector.get('$rootScope');
@@ -120,7 +120,7 @@ describe('Unit: peoplePluginContent content app', function () {
     xdescribe('Location', function () {
         // Load your module.
         var mockObj, Location, $rootScope;
-        beforeEach(module('peoplePluginContent'), function($provide) {
+        beforeEach(module('auctionPluginContent'), function($provide) {
             Location={goTo:function(){},
                goToHome:function(){}
             };

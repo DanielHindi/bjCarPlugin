@@ -1,6 +1,6 @@
-describe('Unit : people Plugin content.home.controller.js', function () {
+describe('Unit : cars Plugin content.home.controller.js', function () {
     var ContentHome, $scope, $rootScope, $controller, $modal, SORT, TAG_NAMES, Buildfire, ERROR_CODE, Location, $sce, $location, $timeout, RankOfLastItem, q;
-    beforeEach(module('peoplePluginContent'));
+    beforeEach(module('auctionPluginContent'));
     var editor;
     beforeEach(inject(function (_$rootScope_, _$controller_, _SORT_, _TAG_NAMES_, _ERROR_CODE_, _Location_, _RankOfLastItem_, _$sce_, _$timeout_, _$q_) {
         $rootScope = _$rootScope_;
@@ -65,7 +65,7 @@ describe('Unit : people Plugin content.home.controller.js', function () {
             $sce: $sce,
             $modal: $modal,
             $timeout: $timeout,
-            PeopleInfo: {
+            AuctionInfo: {
                 data: {
                     content: {
                         images: []
@@ -98,27 +98,7 @@ describe('Unit : people Plugin content.home.controller.js', function () {
         });
     });
 
-    describe('ContentHome.exportCSV Error case', function () {
 
-        it('Should be defined and be a function', function () {
-            ContentHome.exportCSV();
-            $rootScope.$apply();
-            expect(ContentHome.exportCSV).toBeDefined();
-            expect(typeof ContentHome.exportCSV).toEqual('function');
-        });
-    });
-    /*describe('ContentHome.exportCSV Success case', function () {
-
-        it('Should be defined and be a function', function () {
-            Buildfire.datastore.search.and.callFake(function(opts,tname,cb){
-                cb(null,[{data:{'dateCreated':'asdafsdf','iconImage':'dsafsf.png','socialLinks':[],'rank':'12'}}])
-            });
-            ContentHome.exportCSV();
-            $rootScope.$apply();
-            expect(ContentHome.exportCSV).toBeDefined();
-            expect(typeof ContentHome.exportCSV).toEqual('function');
-        });
-    });*/
 
     describe('ContentHome.safeHtml', function () {
         it('Should be defined and be a function', function () {
@@ -155,27 +135,6 @@ describe('Unit : people Plugin content.home.controller.js', function () {
 
             });*/
 //            $rootScope.$digest();
-        });
-    });
-
-    describe('ContentHome.openImportCSVDialog ', function () {
-        it('Should be defined and be a function', function () {
-            expect(ContentHome.openImportCSVDialog ).toBeDefined();
-            expect(typeof ContentHome.openImportCSVDialog ).toEqual('function');
-        });
-        it('ContentHome.openImportCSVDialog ', function () {
-
-            $modal.open.and.callFake(function () {
-                var defer = q.defer();
-                defer.resolve([{}]);
-                return ({
-                    result:defer.promise
-                });
-            });
-
-            ContentHome.openImportCSVDialog();
-            $rootScope.$digest();
-//            expect(result).not.toEqual('');
         });
     });
 

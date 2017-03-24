@@ -1,6 +1,6 @@
 
 describe('Unit: resizeImage filter', function () {
-    beforeEach(module('peopleFiltersContent'));
+    beforeEach(module('auctionFiltersContent'));
     var filter;
     beforeEach(inject(function (_$filter_) {
         filter = _$filter_;
@@ -19,7 +19,7 @@ describe('Unit: resizeImage filter', function () {
     });
 });
 describe('Unit: cropImage filter', function () {
-    beforeEach(module('peopleFiltersContent'));
+    beforeEach(module('auctionFiltersContent'));
     var filter;
     beforeEach(inject(function (_$filter_) {
         filter = _$filter_;
@@ -39,7 +39,7 @@ describe('Unit: cropImage filter', function () {
 });
 
 describe('Unit: truncate filter', function () {
-    beforeEach(module('peopleFiltersContent'));
+    beforeEach(module('auctionFiltersContent'));
     var filter;
     beforeEach(inject(function (_$filter_) {
         filter = _$filter_;

@@ -1,5 +1,5 @@
-describe('Unit: peoplePluginWidget: Services', function () {
-    beforeEach(module('peoplePluginWidget'));
+describe('Unit: auctionPluginWidget: Services', function () {
+    beforeEach(module('auctionPluginWidget'));
 
 
     describe('Unit : Buildfire service', function () {
@@ -12,7 +12,7 @@ describe('Unit: peoplePluginWidget: Services', function () {
 
     describe('Unit : DataStore Factory', function () {
         var DataStore, Buildfire, STATUS_MESSAGES, STATUS_CODE, q;
-        beforeEach(module('peoplePluginWidget'));
+        beforeEach(module('auctionPluginWidget'));
         Buildfire = {
             datastore: {}
         };
@@ -23,12 +23,12 @@ describe('Unit: peoplePluginWidget: Services', function () {
             STATUS_MESSAGES = _STATUS_MESSAGES_;
         }));
     });
-    describe('Unit : People service', function () {
-        var DB, People, Buildfire,$rootScope;
+    describe('Unit : Auction service', function () {
+        var DB, Auction, Buildfire,$rootScope;
         beforeEach(inject(
             function (_DB_,_$rootScope_) {
                 DB = _DB_;
-                People = new DB('People');
+                Auction = new DB('Auction');
                 $rootScope=_$rootScope_;
             }));
         beforeEach(inject(function () {
@@ -38,142 +38,142 @@ describe('Unit: peoplePluginWidget: Services', function () {
             Buildfire.datastore = jasmine.createSpyObj('Buildfire.datastore', ['get', 'getById', 'bulkInsert', 'insert', 'search', 'update', 'save', 'delete']);
         }));
 
-        it('People should exists', function () {
-            expect(People).toBeDefined();
-            expect(People._tagName).toEqual('People');
+        it('Auction should exists', function () {
+            expect(Auction).toBeDefined();
+            expect(Auction._tagName).toEqual('Auction');
         });
-        it('People methods should exists', function () {
-            expect(People.get).toBeDefined();
-            expect(People.find).toBeDefined();
-            expect(People.save).toBeDefined();
-            expect(People.update).toBeDefined();
-            expect(People.delete).toBeDefined();
-            expect(People.insert).toBeDefined();
+        it('Auction methods should exists', function () {
+            expect(Auction.get).toBeDefined();
+            expect(Auction.find).toBeDefined();
+            expect(Auction.save).toBeDefined();
+            expect(Auction.update).toBeDefined();
+            expect(Auction.delete).toBeDefined();
+            expect(Auction.insert).toBeDefined();
         });
         describe('Get method:', function () {
-            it('People.get methods should call Buildfire.datastore.get', function () {
+            it('Auction.get methods should call Buildfire.datastore.get', function () {
                 Buildfire.datastore.get.and.callFake(function (tagName, cb) {
                     cb(null, {});
                 });
-                People.get();
+                Auction.get();
             });
-            it('People.get methods should call Buildfire.datastore.get Error Case', function () {
+            it('Auction.get methods should call Buildfire.datastore.get Error Case', function () {
                 Buildfire.datastore.get.and.callFake(function (tagName, cb) {
                     cb({code: 'No result found'}, null);
                 });
-                People.get();
+                Auction.get();
             });
 
         });
         describe('getById method:', function () {
-            it('People.getById methods should call Buildfire.datastore.getById', function () {
+            it('Auction.getById methods should call Buildfire.datastore.getById', function () {
                 Buildfire.datastore.getById.and.callFake(function (id, tagName, cb) {
                     cb(null, {data: {}});
                 });
-                People.getById('id1');
+                Auction.getById('id1');
             });
-            it('People.getById methods should call Buildfire.datastore.getById Error Case', function () {
+            it('Auction.getById methods should call Buildfire.datastore.getById Error Case', function () {
                 Buildfire.datastore.getById.and.callFake(function (id, tagName, cb) {
                     cb({}, null);
                 });
-                People.getById('id1');
-                People.getById();
+                Auction.getById('id1');
+                Auction.getById();
             });
         });
         describe('insert method:', function () {
-            it('People.insert methods should call Buildfire.datastore.insert', function () {
+            it('Auction.insert methods should call Buildfire.datastore.insert', function () {
                 Buildfire.datastore.insert.and.callFake(function (item, tagName, cb) {
                     cb(null, {data: {}});
                 });
                 Buildfire.datastore.bulkInsert.and.callFake(function (items, tagName, cb) {
                     cb(null, [{}]);
                 });
-                People.insert([]);
-                People.insert('asads');
-                People.insert();
+                Auction.insert([]);
+                Auction.insert('asads');
+                Auction.insert();
                 $rootScope.$apply();
             });
-            it('People.insert methods should call Buildfire.datastore.insert Error Case', function () {
+            it('Auction.insert methods should call Buildfire.datastore.insert Error Case', function () {
                 Buildfire.datastore.insert.and.callFake(function (item, tagName, cb) {
                     cb({}, null);
                 });
                 Buildfire.datastore.bulkInsert.and.callFake(function (item, tagName, cb) {
                     cb({}, null);
                 });
-                People.insert([]);
-                People.insert('asads');
-                People.insert();
+                Auction.insert([]);
+                Auction.insert('asads');
+                Auction.insert();
             });
         });
         describe('find method:', function () {
-            it('People.find methods should call Buildfire.datastore.search', function () {
+            it('Auction.find methods should call Buildfire.datastore.search', function () {
                 Buildfire.datastore.search.and.callFake(function (options, tagName, cb) {
                     cb(null, {});
                 });
-                People.find();
-                People.find({});
+                Auction.find();
+                Auction.find({});
             });
-            it('People.find methods should call Buildfire.datastore.search Error Case', function () {
+            it('Auction.find methods should call Buildfire.datastore.search Error Case', function () {
                 Buildfire.datastore.search.and.callFake(function (options, tagName, cb) {
                     cb({}, null);
                 });
-                People.find();
-                People.find({});
+                Auction.find();
+                Auction.find({});
             });
         });
         describe('update method:', function () {
-            it('People.update methods should call Buildfire.datastore.update', function () {
+            it('Auction.update methods should call Buildfire.datastore.update', function () {
                 Buildfire.datastore.update.and.callFake(function (tagName, cb) {
                     cb(null, {});
                 });
-                People.update('id', {});
-                People.update();
-                People.update('id');
+                Auction.update('id', {});
+                Auction.update();
+                Auction.update('id');
             });
-            it('People.update methods should call Buildfire.datastore.update Error Case', function () {
+            it('Auction.update methods should call Buildfire.datastore.update Error Case', function () {
                 Buildfire.datastore.update.and.callFake(function (id, data, tagName, cb) {
                     cb({}, null);
                 });
-                People.update('id', {});
-                People.update();
-                People.update('id');
+                Auction.update('id', {});
+                Auction.update();
+                Auction.update('id');
             });
         });
         describe('save method:', function () {
-            it('People.save methods should call Buildfire.datastore.save', function () {
+            it('Auction.save methods should call Buildfire.datastore.save', function () {
                 Buildfire.datastore.save.and.callFake(function (tagName, cb) {
                     cb(null, {});
                 });
-                People.save({});
-                People.save();
+                Auction.save({});
+                Auction.save();
             });
-            it('People.save methods should call Buildfire.datastore.save Error case', function () {
+            it('Auction.save methods should call Buildfire.datastore.save Error case', function () {
                 Buildfire.datastore.save.and.callFake(function (tagName, cb) {
                     cb({}, null);
                 });
-                People.save({});
-                People.save();
+                Auction.save({});
+                Auction.save();
             });
         });
         describe('delete method:', function () {
-            it('People.delete methods should call Buildfire.datastore.delete', function () {
+            it('Auction.delete methods should call Buildfire.datastore.delete', function () {
                 Buildfire.datastore.delete.and.callFake(function (tagName, cb) {
                     cb(null, {});
                 });
-                People.delete();
-                People.delete('id');
+                Auction.delete();
+                Auction.delete('id');
             });
-            it('People.delete methods should call Buildfire.datastore.delete Error Case', function () {
+            it('Auction.delete methods should call Buildfire.datastore.delete Error Case', function () {
                 Buildfire.datastore.delete.and.callFake(function (tagName, cb) {
                     cb({}, null);
                 });
-                People.delete();
-                People.delete('id');
+                Auction.delete();
+                Auction.delete('id');
             });
         });
         describe('clearListener method:', function () {
-            it('People.clearListener methods call', function () {
-                People.clearListener();
+            it('Auction.clearListener methods call', function () {
+                Auction.clearListener();
             });
         });
 

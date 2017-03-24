@@ -1,6 +1,6 @@
-describe('Unit : peopleEnums widget Enums', function () {
+describe('Unit : auctionEnums widget Enums', function () {
   var CODES, MESSAGES, EVENTS, LAYOUTS, COLLECTIONS, PATHS;
-  beforeEach(module('peopleEnums'));
+  beforeEach(module('auctionEnums'));
 
   beforeEach(inject(function (_CODES_, _MESSAGES_, _EVENTS_, _COLLECTIONS_, _PATHS_) {
     CODES = _CODES_;

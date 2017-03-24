@@ -1,5 +1,5 @@
 <div class="holder padding-zero">
-  <div class="people-plugin listlayout1" >
+  <div class="cars-plugin listlayout1" >
     <div class="plugin-banner clearfix">
         <div id="carousel" build-fire-carousel=""
              ng-style="WidgetHome.data.content.images.length > 0 ? {'min-height': (9 * deviceWidth / 16) + 'px' } : {}"></div>
@@ -14,24 +14,23 @@
            infinite-scroll="WidgetHome.loadMore()"
            infinite-scroll-disabled="WidgetHome.noMore"
            data-infinite-container=".infinite-scroll-parent">
-      <span ng-repeat="item in WidgetHome.items">
-      <div class="clearfix text-overlay" ng-click="WidgetHome.getPeopleDetails(item.id)">
+      <span ng-repeat="item in WidgetHome.auction.items">
+
+      <div class="clearfix text-overlay" ng-click="WidgetHome.getAuctionDetails(item,$index)">
         <div class="plugin-banner clearfix">
           <div class="plugin-slide text-center">
-            <img ng-if="item.data.topImage" load-image="239x1" data-final-src="{{item.data.topImage}} " crop-width="400" crop-height="192" crop-type="crop">
-            <img ng-if="!item.data.topImage" src="../../../styles/media/holder-2x1.png" >
+            <img load-image="239x1" data-final-src="{{item.images[0].fullsize_url}} " crop-width="400" crop-height="192" crop-type="crop">
           </div>
         </div>
       </div>
-		<div class="padded text-left text-overlay" ng-click="WidgetHome.getPeopleDetails(item.id)">
-      <a class="text-primary">{{item.data.fName}}
-        {{item.data.lName}}</a>
+		<div class="padded text-left text-overlay" ng-click="WidgetHome.getAuctionDetails(item,$index)">
+      <a class="text-primary">{{item.marketing_desc}}</a>
 
       <p class="margin-bottom-zero ellipsis body-content-word-break text-overlay"
-         ng-if="item.data.position">{{item.data.position}}
+         ng-if="item.data.position">{{item.price}} - {{item.salestatus}}
 
       <p class="margin-bottom-zero body-content-word-break text-overlay"
-         ng-if="!item.data.bodyContent"></p>
+         ng-if="!item.short_desc">{{item.short_desc}}</p>
     </div>
     </span>
       </div>

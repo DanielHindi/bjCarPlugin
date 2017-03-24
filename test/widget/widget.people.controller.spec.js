@@ -1,8 +1,8 @@
-describe('Unit : people Plugin widget.people.controller.js when buildfire content and design are defined', function () {
-    var WidgetPeople, scope, $rootScope, $controller, Buildfire, TAG_NAMES, ERROR_CODE, Location, $sce, $location, $routeParams;
-    beforeEach(module('peoplePluginWidget'));
+describe('Unit : cars Plugin widget.cars.controller.js when buildfire content and design are defined', function () {
+    var WidgetAuction, scope, $rootScope, $controller, Buildfire, TAG_NAMES, ERROR_CODE, Location, $sce, $location, $routeParams;
+    beforeEach(module('auctionPluginWidget'));
 
-    beforeEach(module('peoplePluginWidget', function ($provide) {
+    beforeEach(module('auctionPluginWidget', function ($provide) {
         $provide.service('Buildfire', function () {
             this.datastore = jasmine.createSpyObj('datastore', ['get', 'getById', 'onUpdate', 'onRefresh']);
             this.imageLib = jasmine.createSpyObj('imageLib', ['cropImage']);
@@ -44,7 +44,7 @@ describe('Unit : people Plugin widget.people.controller.js when buildfire conten
                 }
             });
             this.datastore.onUpdate.and.callFake(function (callback) {
-                callback({tag: 'peopleInfo', data: {design: {backgroundImage: 'bg.png', itemLayout: 'layout1',listLayout:'listLayout1'}}});
+                callback({tag: 'auctionInfo', data: {design: {backgroundImage: 'bg.png', itemLayout: 'layout1',listLayout:'listLayout1'}}});
                 return {
                     clear: function () {
                         return true
@@ -70,7 +70,7 @@ describe('Unit : people Plugin widget.people.controller.js when buildfire conten
     }));
 
     beforeEach(function () {
-        WidgetPeople = $controller('WidgetPeopleCtrl', {
+        WidgetAuction = $controller('WidgetAuctionCtrl', {
             $scope: scope,
             Buildfire: Buildfire,
             TAG_NAMES: TAG_NAMES,
@@ -81,7 +81,7 @@ describe('Unit : people Plugin widget.people.controller.js when buildfire conten
             $location: $location,
             $routeParams: $routeParams
         });
-        WidgetPeople.data = {content: {sortBy:'Newest'}};
+        WidgetAuction.data = {content: {sortBy:'Newest'}};
     });
 
     describe('Units: units should be Defined', function () {
@@ -116,37 +116,37 @@ describe('Unit : people Plugin widget.people.controller.js when buildfire conten
     });
 
     describe('UNIT: Init', function () {
-        describe('When success of People info get', function () {
+        describe('When success of Auction info get', function () {
             it('it should resolve and return data', function () {
                 $rootScope.$digest();
-                expect(WidgetPeople.data.content.sortBy).toEqual('Newest');
+                expect(WidgetAuction.data.content.sortBy).toEqual('Newest');
             })
         });
     });
-    describe('WidgetPeople.cropImage', function () {
+    describe('WidgetAuction.cropImage', function () {
 
         it('should pass if it returns true when cropImage is not the default html', function () {
-            WidgetPeople.cropImage('image.png', {height: 100, width: 100});
-            WidgetPeople.cropImage();
+            WidgetAuction.cropImage('image.png', {height: 100, width: 100});
+            WidgetAuction.cropImage();
         });
     });
-    describe('WidgetPeople.safeHtml', function () {
-        it('should pass if it returns true when WidgetPeople.safeHtml is not the default html', function () {
-            WidgetPeople.safeHtml('<div>Div Content</div>');
+    describe('WidgetAuction.safeHtml', function () {
+        it('should pass if it returns true when WidgetAuction.safeHtml is not the default html', function () {
+            WidgetAuction.safeHtml('<div>Div Content</div>');
         });
     });
-    describe('WidgetPeople.openLinks', function () {
-        it('should pass if it returns true when WidgetPeople.openLinks is not the default html', function () {
-            WidgetPeople.openLinks([{}]);
+    describe('WidgetAuction.openLinks', function () {
+        it('should pass if it returns true when WidgetAuction.openLinks is not the default html', function () {
+            WidgetAuction.openLinks([{}]);
         });
     });
 });
 
-describe('Unit : people Plugin widget.people.controller.js when buildfire content not defined', function () {
-    var WidgetPeople, scope, $rootScope, $controller, Buildfire, TAG_NAMES, ERROR_CODE, Location, $sce, $location, $routeParams;
-    beforeEach(module('peoplePluginWidget'));
+describe('Unit : cars Plugin widget.cars.controller.js when buildfire content not defined', function () {
+    var WidgetAuction, scope, $rootScope, $controller, Buildfire, TAG_NAMES, ERROR_CODE, Location, $sce, $location, $routeParams;
+    beforeEach(module('auctionPluginWidget'));
 
-    beforeEach(module('peoplePluginWidget', function ($provide) {
+    beforeEach(module('auctionPluginWidget', function ($provide) {
         $provide.service('Buildfire', function () {
             this.datastore = jasmine.createSpyObj('datastore', ['get', 'getById', 'onUpdate', 'onRefresh']);
             this.datastore.get.and.callFake(function (_tagName, callback) {
@@ -208,7 +208,7 @@ describe('Unit : people Plugin widget.people.controller.js when buildfire conten
     }));
 
     beforeEach(function () {
-        WidgetPeople = $controller('WidgetPeopleCtrl', {
+        WidgetAuction = $controller('WidgetAuctionCtrl', {
             $scope: scope,
             Buildfire: Buildfire,
             TAG_NAMES: TAG_NAMES,
@@ -221,21 +221,21 @@ describe('Unit : people Plugin widget.people.controller.js when buildfire conten
         });
     });
 
-    describe('UNIT: getContentPeopleInfo', function () {
-        describe('When success of People info get', function () {
+    describe('UNIT: getContentAuctionInfo', function () {
+        describe('When success of Auction info get', function () {
             it('it should resolve and return data', function () {
                 $rootScope.$digest();
-                expect(WidgetPeople.data.content.sortBy).toEqual('Oldest to Newest');
+                expect(WidgetAuction.data.content.sortBy).toEqual('Oldest to Newest');
             })
         });
     });
 });
 
-describe('Unit : people Plugin widget.people.controller.js when buildfire design not defined', function () {
-    var WidgetPeople, scope, $rootScope, $controller, Buildfire, TAG_NAMES, ERROR_CODE, Location, $sce, $location, $routeParams;
-    beforeEach(module('peoplePluginWidget'));
+describe('Unit : cars Plugin widget.cars.controller.js when buildfire design not defined', function () {
+    var WidgetAuction, scope, $rootScope, $controller, Buildfire, TAG_NAMES, ERROR_CODE, Location, $sce, $location, $routeParams;
+    beforeEach(module('auctionPluginWidget'));
 
-    beforeEach(module('peoplePluginWidget', function ($provide) {
+    beforeEach(module('auctionPluginWidget', function ($provide) {
         $provide.service('Buildfire', function () {
             this.datastore = jasmine.createSpyObj('datastore', ['get', 'getById', 'onUpdate', 'onRefresh']);
             this.datastore.get.and.callFake(function (_tagName, callback) {
@@ -270,7 +270,7 @@ describe('Unit : people Plugin widget.people.controller.js when buildfire design
                 }
             });
             this.datastore.onUpdate.and.callFake(function (callback) {
-                callback({tag: 'people', data: {design: {backgroundImage: 'bg.png', itemLayout: 'layout1'}}});
+                callback({tag: 'cars', data: {design: {backgroundImage: 'bg.png', itemLayout: 'layout1'}}});
                 return {
                     clear: function () {
                         return true
@@ -296,7 +296,7 @@ describe('Unit : people Plugin widget.people.controller.js when buildfire design
     }));
 
     beforeEach(function () {
-        WidgetPeople = $controller('WidgetPeopleCtrl', {
+        WidgetAuction = $controller('WidgetAuctionCtrl', {
             $scope: scope,
             Buildfire: Buildfire,
             TAG_NAMES: TAG_NAMES,
@@ -309,12 +309,12 @@ describe('Unit : people Plugin widget.people.controller.js when buildfire design
         });
     });
 
-    describe('UNIT: getContentPeopleInfo', function () {
-        describe('When success of People info get', function () {
+    describe('UNIT: getContentAuctionInfo', function () {
+        describe('When success of Auction info get', function () {
             it('it should resolve and return data', function () {
                 $rootScope.$digest();
-                expect(WidgetPeople.data.design.itemLayout).toEqual('item-layout-1');
-                expect(WidgetPeople.data.design.listLayout).toEqual('list-layout-1');
+                expect(WidgetAuction.data.design.itemLayout).toEqual('item-layout-1');
+                expect(WidgetAuction.data.design.listLayout).toEqual('list-layout-1');
             })
         });
     });

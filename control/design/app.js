@@ -1,10 +1,10 @@
 'use strict';
 (function (angular, buildfire) {
     angular
-        .module('peoplePluginDesign', ['ngAnimate', 'ngRoute',  'ui.bootstrap'])
+        .module('auctionPluginDesign', ['ngAnimate', 'ngRoute',  'ui.bootstrap'])
         .constant('TAG_NAMES', {
-            PEOPLE_INFO: 'peopleInfo',
-            PEOPLE: 'people'
+            AUCTION_INFO: 'auctionInfo',
+            AUCTION: 'cars'
         })
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider

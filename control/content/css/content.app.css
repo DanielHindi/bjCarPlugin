@@ -57,7 +57,7 @@
 }
 
 /*
-To align action buttons in image carousel listing and people listing on home page
+To align action buttons in image carousel listing and cars listing on home page
 */
 .list-view {
     width: 35% !important;
@@ -115,7 +115,7 @@ To align action buttons in image carousel listing and people listing on home pag
     top: 12px !important;
 }
 /*
-Styles for pagination in people listing
+Styles for pagination in cars listing
 */
 
 #scroll-infinite{
@@ -132,24 +132,24 @@ For disabling anchor buttons
     opacity: 0.5;
 }
 /*
-styles for people list
+styles for cars list
 */
-.people-item-list{
+.cars-item-list{
     min-height: 55px;
 }
 
-.people-item-list .copy{
+.cars-item-list .copy{
     width: auto;
     max-width: inherit;
     min-width: inherit;
     display: block;
     overflow: hidden;
 }
-.people-item-list img{
+.cars-item-list img{
     float: left;
 }
 
-.people-item-list .icon{
+.cars-item-list .icon{
     float: left;
 }
 /*

@@ -1,0 +1,10 @@
+<div class="overlay background" ng-if="WidgetAuction.data.design.backgroundImage && WidgetAuction.deviceWidth != 0 && WidgetAuction.deviceHeight != 0">
+    <img lazy-img="{{ WidgetAuction.cropImage(WidgetAuction.data.design.backgroundImage, {width: WidgetAuction.deviceWidth, height: WidgetAuction.deviceHeight}) }}">
+</div>
+<div>
+  <div ng-if="WidgetAuction.data.design.itemLayout"
+      ng-include="'templates/layouts/' + WidgetAuction.data.design.itemLayout + '.html'">
+
+  </div>
+</div>
+

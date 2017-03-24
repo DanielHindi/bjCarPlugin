@@ -1,6 +1,6 @@
-describe('Unit : peoplePluginContent content people remove modal', function () {
-    var RemovePeoplePopup, scope, $rootScope, $controller,modalInstance;
-    beforeEach(module('peoplePluginContent'));
+describe('Unit : auctionPluginContent content cars remove modal', function () {
+    var RemoveAuctionPopup, scope, $rootScope, $controller,modalInstance;
+    beforeEach(module('auctionPluginContent'));
     beforeEach(inject(function (_$rootScope_, _$controller_) {
         $rootScope = _$rootScope_;
         scope = $rootScope.$new();
@@ -15,23 +15,23 @@ describe('Unit : peoplePluginContent content people remove modal', function () {
     }));
 
     beforeEach(function () {
-        RemovePeoplePopup = $controller('RemovePeoplePopupCtrl', {
+        RemoveAuctionPopup = $controller('RemoveAuctionPopupCtrl', {
             $scope: scope,
             $modalInstance:modalInstance,
-            peopleInfo: {}
+            auctionInfo: {}
         });
     });
 
     describe('It will test the defined methods', function () {
-        it('it should pass if RemovePeoplePopup is defined', function () {
-            expect(RemovePeoplePopup).not.toBeUndefined();
+        it('it should pass if RemoveAuctionPopup is defined', function () {
+            expect(RemoveAuctionPopup).not.toBeUndefined();
         });
-        it('RemovePeoplePopupCtrl.cancel should close modalInstance', function () {
-            RemovePeoplePopup.cancel();
+        it('RemoveAuctionPopupCtrl.cancel should close modalInstance', function () {
+            RemoveAuctionPopup.cancel();
             expect(modalInstance.dismiss).toHaveBeenCalledWith('No');
         });
-        it('RemovePeoplePopupCtrl.ok should close modalInstance', function () {
-            RemovePeoplePopup.ok();
+        it('RemoveAuctionPopupCtrl.ok should close modalInstance', function () {
+            RemoveAuctionPopup.ok();
             expect(modalInstance.close).toHaveBeenCalledWith('yes');
         });
     });

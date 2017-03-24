@@ -2,15 +2,15 @@
 
 (function (angular, window) {
     angular
-        .module('peoplePluginWidget')
-        .controller('WidgetPeopleCtrl', ['$scope', 'Buildfire', 'TAG_NAMES', 'ERROR_CODE', "Location", '$routeParams', '$sce', '$location', '$rootScope',
+        .module('auctionPluginWidget')
+        .controller('WidgetAuctionCtrl', ['$scope', 'Buildfire', 'TAG_NAMES', 'ERROR_CODE', "Location", '$routeParams', '$sce', '$location', '$rootScope',
             function ($scope, Buildfire, TAG_NAMES, ERROR_CODE, Location, $routeParams, $sce, $location, $rootScope) {
-                var WidgetPeople = this;
+                var WidgetAuction = this;
                 var currentItemLayout,
                     currentListLayout;
                 var DEFAULT_LIST_LAYOUT = 'list-layout-1',
                     DEFAULT_ITEM_LAYOUT = 'item-layout-1';
-                WidgetPeople.defaults = {
+                WidgetAuction.defaults = {
                     DEFAULT_LIST_LAYOUT: 'list-layout-1',
                     DEFAULT_ITEM_LAYOUT: 'item-layout-1',
                     DEFAULT_SORT_OPTION: "Oldest to Newest"
@@ -41,15 +41,15 @@
                 }
                 $rootScope.showHome = false;
                 /*declare the device width heights*/
-                WidgetPeople.deviceHeight = window.innerHeight;
-                WidgetPeople.deviceWidth = window.innerWidth;
+                WidgetAuction.deviceHeight = window.innerHeight;
+                WidgetAuction.deviceWidth = window.innerWidth;
 
                 /*initialize the device width heights*/
                 var initDeviceSize = function (callback) {
-                    WidgetPeople.deviceHeight = window.innerHeight;
-                    WidgetPeople.deviceWidth = window.innerWidth;
+                    WidgetAuction.deviceHeight = window.innerHeight;
+                    WidgetAuction.deviceWidth = window.innerWidth;
                     if (callback) {
-                        if (WidgetPeople.deviceWidth == 0 || WidgetPeople.deviceHeight == 0) {
+                        if (WidgetAuction.deviceWidth == 0 || WidgetAuction.deviceHeight == 0) {
                             setTimeout(function () {
                                 initDeviceSize(callback);
                             }, 500);
@@ -63,7 +63,7 @@
                 };
 
                 /*crop image on the basis of width heights*/
-                WidgetPeople.cropImage = function (url, settings) {
+                WidgetAuction.cropImage = function (url, settings) {
                     var options = {};
                     if (!url) {
                         return "";
@@ -79,69 +79,70 @@
                     }
                 };
 
-                WidgetPeople.safeHtml = function (html) {
+                WidgetAuction.safeHtml = function (html) {
                     if (html)
                         return $sce.trustAsHtml(html);
                 };
-                var itemId = $routeParams.id;
-                var getPeopleDetail = function () {
-                    Buildfire.datastore.getById(itemId, TAG_NAMES.PEOPLE, function (err, result) {
-                        if (err && err.code !== ERROR_CODE.NOT_FOUND) {
-                            $rootScope.showHome = false;
-                            console.error('-----------Unable to load data-------------', err);
-                        }
-                        else {
-                            $rootScope.showHome = false;
-                            WidgetPeople.item = result.data;
-                            $scope.$digest();
-                        }
-                        bindOnUpdate();
+
+                var getAuctionDetail = function () {
+
+                    $rootScope.showHome = false;
+                    WidgetAuction.item = window.auction.items[$routeParams.id];
+
+                    WidgetAuction.item.images.forEach(function(img){
+                        img.crop_url = buildfire.imageLib.cropImage(img.fullsize_url,{width:'full',height:235});
                     });
+
+                    $scope.$digest();
+                    bindOnUpdate();
+
+                    setTimeout(triggerKB,50);
+
                 };
-                var getContentPeopleInfo = function () {
-                    Buildfire.datastore.get(TAG_NAMES.PEOPLE_INFO, function (err, result) {
+                var getContentAuctionInfo = function () {
+                    Buildfire.datastore.get(TAG_NAMES.AUCTION_INFO, function (err, result) {
 
                         if (err && err.code !== ERROR_CODE.NOT_FOUND) {
                             return console.error('-----------err-------------', err);
                         }
                         if (result && result.data) {
-                            WidgetPeople.data = result.data;
-                            if (!WidgetPeople.data.content) {
-                                WidgetPeople.data.content = {
-                                    sortBy: WidgetPeople.defaults.DEFAULT_SORT_OPTION
+                            WidgetAuction.data = result.data;
+                            if (!WidgetAuction.data.content) {
+                                WidgetAuction.data.content = {
+                                    sortBy: WidgetAuction.defaults.DEFAULT_SORT_OPTION
                                 }
                             }
-                            if (!WidgetPeople.data.design) {
-                                WidgetPeople.data.design = {
-                                    itemLayout: WidgetPeople.defaults.DEFAULT_ITEM_LAYOUT,
-                                    listLayout: WidgetPeople.defaults.DEFAULT_LIST_LAYOUT
+                            if (!WidgetAuction.data.design) {
+                                WidgetAuction.data.design = {
+                                    itemLayout: WidgetAuction.defaults.DEFAULT_ITEM_LAYOUT,
+                                    listLayout: WidgetAuction.defaults.DEFAULT_LIST_LAYOUT
                                 };
                             } else {
-                                currentItemLayout = WidgetPeople.data.design.itemLayout;
-                                currentListLayout = WidgetPeople.data.design.listLayout;
+                                currentItemLayout = WidgetAuction.data.design.itemLayout;
+                                currentListLayout = WidgetAuction.data.design.listLayout;
                             }
                             $scope.$digest();
                         } else {
-                            throw ("Error with people plugin.");
+                            throw ("Error with cars plugin.");
                         }
 
-                        getPeopleDetail();
+                        getAuctionDetail();
                     });
                 };
-                getContentPeopleInfo();
+                getContentAuctionInfo();
                 function bindOnUpdate() {
-                    WidgetPeople.onUpdateFn = Buildfire.datastore.onUpdate(function (event) {
+                    WidgetAuction.onUpdateFn = Buildfire.datastore.onUpdate(function (event) {
                         console.log("Hello--------1")
                         if (event && event.tag) {
                             switch (event.tag) {
-                                case TAG_NAMES.PEOPLE:
-                                    console.log('People iNfo updated-----------------', event.data);
+                                case TAG_NAMES.AUCTION:
+                                    console.log('Auction iNfo updated-----------------', event.data);
                                     $rootScope.$broadcast('Item_Updated', event);
                                     if (event.data)
-                                        WidgetPeople.item = event.data;
+                                        WidgetAuction.item = event.data;
                                     break;
-                                case TAG_NAMES.PEOPLE_INFO:
-                                    WidgetPeople.data = event.data;
+                                case TAG_NAMES.AUCTION_INFO:
+                                    WidgetAuction.data = event.data;
                                     if (event.data.design.backgroundImage) {
                                         $rootScope.backgroundImage = event.data.design.backgroundImage;
                                     }
@@ -149,7 +150,7 @@
                                         $rootScope.backgroundImage = ""
                                     }
                                     if (event.data.design.itemLayout && currentItemLayout != event.data.design.itemLayout) {
-                                        WidgetPeople.data.design.itemLayout = event.data.design.itemLayout;
+                                        WidgetAuction.data.design.itemLayout = event.data.design.itemLayout;
                                         currentItemLayout = event.data.design.itemLayout;
 
                                     }
@@ -164,11 +165,11 @@
                 }
 
                 $scope.$on("$destroy", function () {
-                    WidgetPeople.onUpdateFn.clear();
+                    WidgetAuction.onUpdateFn.clear();
 
-                    $rootScope.$broadcast('ROUTE_CHANGED', WidgetPeople.data.design.listLayout, WidgetPeople.data.design.itemLayout, WidgetPeople.data.design.backgroundImage, WidgetPeople.data);
+                    $rootScope.$broadcast('ROUTE_CHANGED', WidgetAuction.data.design.listLayout, WidgetAuction.data.design.itemLayout, WidgetAuction.data.design.backgroundImage, WidgetAuction.data);
                 });
-                WidgetPeople.openLinks = function (actionItems) {
+                WidgetAuction.openLinks = function (actionItems) {
                     if (actionItems && actionItems.length) {
                         var options = {};
                         var callback = function (error, result) {
@@ -181,7 +182,7 @@
                 }
                 Buildfire.datastore.onRefresh(function(){
 
-                    getPeopleDetail();
+                    getAuctionDetail();
                   });
             }])
 })(window.angular, window);

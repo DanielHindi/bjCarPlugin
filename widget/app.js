@@ -2,18 +2,18 @@
 
 (function (angular, buildfire) {
   angular
-    .module('peoplePluginWidget', [
-      'peopleEnums',
-      'peopleFilters',
-      'peopleWidgetServices',
+    .module('auctionPluginWidget', [
+      'auctionEnums',
+      'auctionFilters',
+      'auctionWidgetServices',
       'ngAnimate',
       'ngRoute',
       'ui.bootstrap',
       'infinite-scroll'
     ])
     .constant('TAG_NAMES', {
-      PEOPLE_INFO: 'peopleInfo',
-      PEOPLE: 'people'
+      AUCTION_INFO: 'auctionInfo',
+      AUCTION: 'cars'
     })
     .constant('ERROR_CODE', {
       NOT_FOUND: 'NOTFOUND'
@@ -30,10 +30,10 @@
         .when('/', {
           template: '<div></div>'
         })
-        .when('/people/:id', {
-          templateUrl: 'templates/people.html',
-          controllerAs: 'WidgetPeople',
-          controller: 'WidgetPeopleCtrl'
+        .when('/cars/:id', {
+          templateUrl: 'templates/cars.html',
+          controllerAs: 'WidgetAuction',
+          controller: 'WidgetAuctionCtrl'
         })
         .otherwise('/');
     }])
@@ -128,10 +128,10 @@
       buildfire.messaging.onReceivedMessage = function (msg) {
         switch (msg.type) {
           case 'AddNewItem':
-            Location.goTo("#/people/" + msg.id + "?stopSwitch=true");
+            Location.goTo("#/cars/" + msg.id + "?stopSwitch=true");
             break;
           case 'OpenItem':
-            Location.goTo("#/people/" + msg.id);
+            Location.goTo("#/cars/" + msg.id);
             break;
           default:
             if ($rootScope.showHome == false)
@@ -140,7 +140,7 @@
       };
       buildfire.deeplink.getData(function (data) {
         if (data) {
-          Location.goTo("#/people/" + JSON.parse(data).id);
+          Location.goTo("#/cars/" + JSON.parse(data).id);
         }
       });
 

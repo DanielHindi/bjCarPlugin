@@ -1,41 +1,41 @@
 <div class="holder padding-zero">
-	<div class="people-plugin layout2">
-		<div class="people-banner text-overlay" style="min-height: 170px" ng-if="WidgetPeople.item.topImage"
-         data-ng-attr-style="background:url({{WidgetPeople.item.topImage}}) no-repeat; background-position:center center;" crop-width="342" crop-height="170" crop-type="crop">
-			<div class="people-bg padding-top-fifteen padding-bottom-fifteen clearfix">
-				<div class="people-holder clearfix">	
-					<div class="people-media text-center">
+	<div class="cars-plugin layout2">
+		<div class="cars-banner text-overlay" style="min-height: 170px" ng-if="WidgetAuction.item.topImage"
+         data-ng-attr-style="background:url({{WidgetAuction.item.topImage}}) no-repeat; background-position:center center;" crop-width="342" crop-height="170" crop-type="crop">
+			<div class="cars-bg padding-top-fifteen padding-bottom-fifteen clearfix">
+				<div class="cars-holder clearfix">	
+					<div class="cars-media text-center">
 						<img load-image="1x1" class="border-grey img-circle text-overlay" style="min-width: 100px;min-height: 100px"
-                 data-final-src="{{WidgetPeople.item.topImage}}" crop-width="100" crop-height="100" crop-type="crop">
+                 data-final-src="{{WidgetAuction.item.topImage}}" crop-width="100" crop-height="100" crop-type="crop">
 					</div>
-					<div class="people-info text-center col-md-12">
-						<p class="ellipsis text-overlay whiteTheme">{{WidgetPeople.item.fName}} {{WidgetPeople.item.lName}}</p>
-						<p class="ellipsis whiteTheme">{{WidgetPeople.item.position}}</p>
-            			<a ng-if="WidgetPeople.item.socialLinks.length" class="icon icon-profile text-overlay whiteTheme" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"></a>
+					<div class="cars-info text-center col-md-12">
+						<p class="ellipsis text-overlay whiteTheme">{{WidgetAuction.item.fName}} {{WidgetAuction.item.lName}}</p>
+						<p class="ellipsis whiteTheme">{{WidgetAuction.item.position}}</p>
+            			<a ng-if="WidgetAuction.item.socialLinks.length" class="icon icon-profile text-overlay whiteTheme" ng-click="WidgetAuction.openLinks(WidgetAuction.item.socialLinks)"></a>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="people-banner text-overlay"
-         ng-if="!WidgetPeople.item.topImage"
-         data-ng-attr-style="background:url({{WidgetPeople.item.topImage ||'../../../styles/media/holder-16x9.png'}}) no-repeat; background-position:center center;">
-			<div class="people-bg padding-top-fifteen padding-bottom-fifteen clearfix">
-				<div class="people-holder clearfix">
-					<div class="people-media text-center">
+		<div class="cars-banner text-overlay"
+         ng-if="!WidgetAuction.item.topImage"
+         data-ng-attr-style="background:url({{WidgetAuction.item.topImage ||'../../../styles/media/holder-16x9.png'}}) no-repeat; background-position:center center;">
+			<div class="cars-bg padding-top-fifteen padding-bottom-fifteen clearfix">
+				<div class="cars-holder clearfix">
+					<div class="cars-media text-center">
 						<img class="border-grey img-circle text-overlay"
-                 ng-src="{{WidgetPeople.item.topImage  ||'../../../styles/media/holder-1x1.png'}}">
+                 ng-src="{{WidgetAuction.item.topImage  ||'../../../styles/media/holder-1x1.png'}}">
 					</div>
-					<div class="people-info text-center col-md-12">
-						<h4 class="ellipsis text-overlay"><a class="text-white">{{WidgetPeople.item.fName}} {{WidgetPeople.item.lName}}</a></h4>
-						<h5 class="ellipsis">{{WidgetPeople.item.position}}</h5>
-						<a class="icon icon-profile text-white" ng-if="WidgetPeople.item.socialLinks.length" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"></a>
+					<div class="cars-info text-center col-md-12">
+						<h4 class="ellipsis text-overlay"><a class="text-white">{{WidgetAuction.item.fName}} {{WidgetAuction.item.lName}}</a></h4>
+						<h5 class="ellipsis">{{WidgetAuction.item.position}}</h5>
+						<a class="icon icon-profile text-white" ng-if="WidgetAuction.item.socialLinks.length" ng-click="WidgetAuction.openLinks(WidgetAuction.item.socialLinks)"></a>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="padded">
-			<p class="break-word text-overlay" ng-if="WidgetPeople.item.bodyContent" ng-bind-html='WidgetPeople.safeHtml(WidgetPeople.item.bodyContent)'></p>
-			<p class="break-word text-overlay" ng-if="!WidgetPeople.item.bodyContent"></p>
+			<p class="break-word text-overlay" ng-if="WidgetAuction.item.bodyContent" ng-bind-html='WidgetAuction.safeHtml(WidgetAuction.item.bodyContent)'></p>
+			<p class="break-word text-overlay" ng-if="!WidgetAuction.item.bodyContent"></p>
 		</div>
 	</div>
 </div>

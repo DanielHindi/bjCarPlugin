@@ -1,26 +1,26 @@
 <div class="holder padding-zero">
-	<div class="people-plugin layout1">
+	<div class="cars-plugin layout1">
 		<div class="plugin-banner clearfix">
 			<div class="plugin-slider text-center">
-				<div  ng-if="WidgetPeople.item.topImage"  class="text-overlay" style="min-height: 200px">
-					<img load-image="16x9" data-final-src="{{WidgetPeople.item.topImage}}" crop-width="400" crop-height="235" crop-type="crop">
-					<!--<img ng-if="!WidgetPeople.item.topImage" src="../../../styles/media/holder-2x1.png">-->
+				<div  class="text-overlay" style="min-height: 200px">
+					<ul id="pictures-demo">
+						<li ng-repeat="img in WidgetAuction.item.images" title="This is caption 1 <a href='#link'>Even with links!</a>">
+							<img src="{{img.crop_url}}">
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
-		<div class="people-info text-left padded padding-bottom-zero padding-top-ten clearfix ">
+		<div class="cars-info text-left padded padding-bottom-zero padding-top-ten clearfix ">
 			<div class="col-xs-10 padding-zero pull-left">
-				<p class="margin-zero text-overlay" style="font-size: 16px">{{WidgetPeople.item.fName}} {{WidgetPeople.item.lName}}</p>
-				<p class="margin-bottom-zero">{{WidgetPeople.item.position}}</p>
-			</div>
-			<div class="col-xs-2 padding-right-zero pull-right text-right text-overlay margin-top-ten">
-				<a ng-if="WidgetPeople.item.socialLinks.length" class="icon icon-profile text-overlay" ng-click="WidgetPeople.openLinks(WidgetPeople.item.socialLinks)"></a>
+				<p class="margin-zero text-overlay" style="font-size: 16px">{{WidgetAuction.item.marketing_desc}}</p>
+				<p class="margin-bottom-zero">{{WidgetAuction.item.price}}</p>
 			</div>
 		</div>
 		<div class="padded padding-top-zero">
 			<hr class="small">
-			<p class="break-word text-overlay" ng-if='WidgetPeople.item.bodyContent' ng-bind-html='WidgetPeople.safeHtml(WidgetPeople.item.bodyContent)'></p>
-			<p class="break-word" ng-if='!WidgetPeople.item.bodyContent'></p>
+			<p class="break-word text-overlay" ng-if='WidgetAuction.item.long_desc' ng-bind-html='WidgetAuction.safeHtml(WidgetAuction.item.long_desc)'></p>
+			<p class="break-word" ng-if='!WidgetAuction.item.long_desc'></p>
 		</div>
 	</div>
 </div>

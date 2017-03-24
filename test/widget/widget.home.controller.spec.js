@@ -1,4 +1,4 @@
-describe('Unit : people Plugin widget.home.controller.js success of PeopleInfo.get inside init', function () {
+describe('Unit : cars Plugin widget.home.controller.js success of AuctionInfo.get inside init', function () {
     var WidgetHome,
         scope,
         $rootScope,
@@ -12,7 +12,7 @@ describe('Unit : people Plugin widget.home.controller.js success of PeopleInfo.g
         COLLECTIONS,
         DB;
 
-    beforeEach(module('peoplePluginWidget', function ($provide) {
+    beforeEach(module('auctionPluginWidget', function ($provide) {
         $provide.service('Buildfire', function () {
             this.datastore = jasmine.createSpyObj('datastore', ['get', 'onUpdate','search', 'onRefresh']);
             this.imageLib=jasmine.createSpyObj('imageLib',['cropImage','resizeImage']);
@@ -50,7 +50,7 @@ describe('Unit : people Plugin widget.home.controller.js success of PeopleInfo.g
                 }
             });
             this.datastore.onUpdate.and.callFake(function (callback) {
-                callback({tag: 'peopleInfo', data: {design: {backgroundImage: '', itemLayout: 'layout1',listLayout:'listLayout1'},content:{sortBy:'Newest'}}});
+                callback({tag: 'auctionInfo', data: {design: {backgroundImage: '', itemLayout: 'layout1',listLayout:'listLayout1'},content:{sortBy:'Newest'}}});
                 return {
                     clear: function () {
                         return true
@@ -94,7 +94,7 @@ describe('Unit : people Plugin widget.home.controller.js success of PeopleInfo.g
             DB: DB,
             COLLECTIONS: COLLECTIONS
         });
-        WidgetHome.items=[{id:'people1'}];
+        WidgetHome.items=[{id:'auction1'}];
     });
 
     describe('Units: units should be Defined', function () {
@@ -121,7 +121,7 @@ describe('Unit : people Plugin widget.home.controller.js success of PeopleInfo.g
     });
 
     describe('UNIT: Init', function () {
-        describe('When success of People info get', function () {
+        describe('When success of Auction info get', function () {
             it('it should resolve and return data', function () {
                 $rootScope.$digest();
                 expect(WidgetHome.data.content.sortBy).toEqual('Newest');
@@ -145,11 +145,11 @@ describe('Unit : people Plugin widget.home.controller.js success of PeopleInfo.g
         });
     });
 
-    describe('WidgetHome.getPeopleDetails', function () {
+    describe('WidgetHome.getAuctionDetails', function () {
 
         it('should pass if it returns true when description is not the default html', function () {
-            var peopleId = 'b3458999a';
-            WidgetHome.getPeopleDetails(peopleId);
+            var auctionId = 'b3458999a';
+            WidgetHome.getAuctionDetails(auctionId);
         });
     });
     describe('WidgetHome.cropImage', function () {
@@ -188,7 +188,7 @@ describe('Unit : people Plugin widget.home.controller.js success of PeopleInfo.g
     });
 
 });
-describe('Unit : people Plugin widget.home.controller.js error of PeopleInfo.get inside init', function () {
+describe('Unit : cars Plugin widget.home.controller.js error of AuctionInfo.get inside init', function () {
     var WidgetHome,
         scope,
         $rootScope,
@@ -202,7 +202,7 @@ describe('Unit : people Plugin widget.home.controller.js error of PeopleInfo.get
         COLLECTIONS,
         DB;
 
-    beforeEach(module('peoplePluginWidget', function ($provide) {
+    beforeEach(module('auctionPluginWidget', function ($provide) {
         $provide.service('Buildfire', function () {
             this.datastore = jasmine.createSpyObj('datastore', ['get', 'onUpdate', 'onRefresh']);
             this.datastore.get.and.callFake(function (_tagName, callback) {
